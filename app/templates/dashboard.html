@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    <div class="container">
+        <div class="pagination">
+            {% for i in range(count) %}
+                <a href="/dashboard?page={{ i }}&keyword={{ keyword }}">{{ i }}</a>
+            {% endfor %}
+        </div>
+        <form action="/dashboard" method="get">
+            <input type="text" name="keyword" id="keyword" placeholder="Keyword">
+            <input type="submit" value="Search">
+        </form>
+        <div class="anime-list">
+            {% for item in result %}
+                <div class="anime-card">
+                    <div class="anime-left">
+                        <img src="{{ url_for('static', filename='images/' ~ item.image_url) }}" alt="{{ item.title }}" />
+                        <h3 class="anime-title">{{ item.title }}</h3>
+                    </div>
+                    <div class="anime-right">
+                        <div class="anime-genres">
+                            {% for genre in item.genres.split(', ') %}
+                                <span class="genre-tag genre-{{ genre.lower().replace(' ', '-') }}">{{ genre }}</span>
+                            {% endfor %}
+                        </div>
+                        <p class="anime-description">{{ item.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>

